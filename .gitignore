@@ -1,0 +1,9 @@
+*.sublime-workspace
+obj/
+bin/
+packages/
+*.suo
+*.user
+*.vspx
+*.psess
+*.rar
