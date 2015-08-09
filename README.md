@@ -1,16 +1,16 @@
 GTAV IGT
 ========
 
-![Image](http://i.imgur.com/gp4q8hT.png)
+![Image](http://puu.sh/jvsPm/817249b213.png)
 
 Features
 --------
-* Display the game time of the currently loaded save.
-* [LiveSplit](http://livesplit.org) autosplitter: game time, automatic start and reset.
+* Display the current loading state of the game.
+* [LiveSplit](http://livesplit.org) load remover.
 
 Settings
 --------
-   You can access the settings by right clicking the main window.
+You can access the settings by right clicking the main window.
 
 LiveSplit
 ---------
@@ -26,7 +26,7 @@ If you want to compare your splits against Game Time:
 **Right click on LiveSplit's window -> Compare Against -> Game Time**
 
 ### Alternate Timing Method
-   If you want to display both Game Time and Real Time in your layout, I suggest getting the Alternate Timing Method component     from [LiveSplit's website](http://livesplit.org/components/) or from its own [GitHub page](https://github.com/Dalet/LiveSplit.AlternateTimingMethod/releases).
+If you want to display both Game Time and Real Time in your layout, I suggest getting the Alternate Timing Method component     from [LiveSplit's website](http://livesplit.org/components/) or from its own [GitHub page](https://github.com/Dalet/LiveSplit.AlternateTimingMethod/releases).
 
 Credits
 -------
