@@ -27,7 +27,7 @@ namespace LiveSplit.GTAV64
         {
             InitializeComponent();
             Version currentVer = Assembly.GetExecutingAssembly().GetName().Version;
-            this.Text = $"GTAV AutoSplitter {currentVer.Major}.{currentVer.Minor}.{currentVer.Build}";
+            labelVersion.Text = $"{currentVer.Major}.{currentVer.Minor}.{currentVer.Build}";
             this.Disposed += Dispose;
             this.Icon = Properties.Resources.Splr_gtav;
 
