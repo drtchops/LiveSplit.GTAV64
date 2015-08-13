@@ -35,6 +35,7 @@ namespace LiveSplit.GTAV64
 
             this.chkCheckUpdates.DataBindings.Add("Checked", this, "CheckUpdates", false, DataSourceUpdateMode.OnPropertyChanged);
             this.numPort.DataBindings.Add("Value", this, "Port", false, DataSourceUpdateMode.OnPropertyChanged);
+            this.txtAddress.DataBindings.Add("Text", this, "SERVER_IP", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         void CheckArguments()
@@ -48,6 +49,11 @@ namespace LiveSplit.GTAV64
                     int port;
                     if (int.TryParse(Program.args[i + 1], out port))
                         Port = port;
+                }
+                else if (arg == "-ip" && i + 1 < Program.args.Length)
+                {
+                    string ip = Program.args[i + 1];
+                    SERVER_IP = ip;
                 }
                 else if (arg == "-livesplit") // arg used when launching via the LiveSplit component
                 {
@@ -77,6 +83,7 @@ namespace LiveSplit.GTAV64
             settingsElem.AppendChild(liveSplitServerNode);
 
             liveSplitServerNode.AppendChild(ToElement(doc, "Port", Port));
+            liveSplitServerNode.AppendChild(ToElement(doc, "Address", SERVER_IP));
 
             try
             {
@@ -105,6 +112,7 @@ namespace LiveSplit.GTAV64
                 XmlNode liveSplitServerNode = doc["Settings"]["LiveSplitServer"];
 
                 Port = int.Parse(liveSplitServerNode["Port"].InnerText);
+                SERVER_IP = liveSplitServerNode["Address"].InnerText;
             }
         }
 

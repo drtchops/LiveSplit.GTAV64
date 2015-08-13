@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -20,11 +21,18 @@ namespace LiveSplit.GTAV64
         private SynchronizationContext _uiThread;
 
         private DeepPointer _isLoadingPtr;
+        private List<int> _ignorePIDs;
+
+        private enum ExpectedDllSizes
+        {
+            RGSC3934 = 70944768,
+            Steam3934 = 71725056,
+            RGSC3722 = 70718464
+        }
 
         public GameMemory()
         {
-            _isLoadingPtr = new DeepPointer(0x2153C30);
-            // _isLoadingPtr = new DeepPointer(0x2154090);
+            _ignorePIDs = new List<int>();
         }
 
         public void StartMonitoring()
@@ -125,9 +133,25 @@ namespace LiveSplit.GTAV64
 
         Process GetGameProcess()
         {
-            Process game = Process.GetProcesses().FirstOrDefault(p => p.ProcessName == "GTA5" && !p.HasExited);
+            Process game = Process.GetProcesses().FirstOrDefault(p => p.ProcessName == "GTA5" && !p.HasExited && !_ignorePIDs.Contains(p.Id));
             if (game == null)
                 return null;
+
+            if (game.MainModule.ModuleMemorySize == (int)ExpectedDllSizes.RGSC3722)
+                _isLoadingPtr = new DeepPointer(0x2153C30);
+
+            else if (game.MainModule.ModuleMemorySize == (int)ExpectedDllSizes.RGSC3934)
+                _isLoadingPtr = new DeepPointer(0x21C94C0);
+
+            else if (game.MainModule.ModuleMemorySize == (int)ExpectedDllSizes.Steam3934)
+                _isLoadingPtr = new DeepPointer(0x21CC740);
+
+            else
+            {
+                MessageBox.Show("Unexpected game version. Steam 393.4 or RGSC 393.4/372.2 is currently required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ignorePIDs.Add(game.Id);
+                return null;
+            }
 
             return game;
         }
