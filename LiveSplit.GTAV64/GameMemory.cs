@@ -25,9 +25,10 @@ namespace LiveSplit.GTAV64
 
         private enum ExpectedDllSizes
         {
+            RGSC3722 = 70718464,
             RGSC3934 = 70944768,
             Steam3934 = 71725056,
-            RGSC3722 = 70718464
+            RGSC4631 = 70275072
         }
 
         public GameMemory()
@@ -146,9 +147,12 @@ namespace LiveSplit.GTAV64
             else if (game.MainModule.ModuleMemorySize == (int)ExpectedDllSizes.Steam3934)
                 _isLoadingPtr = new DeepPointer(0x21CC740);
 
+            else if (game.MainModule.ModuleMemorySize == (int)ExpectedDllSizes.RGSC4631)
+                _isLoadingPtr = new DeepPointer(0x21D3DB0);
+
             else
             {
-                MessageBox.Show("Unexpected game version. Steam 393.4 or RGSC 393.4/372.2 is currently required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unexpected game version. Steam 393.4 or RGSC 463.1/393.4/372.2 is currently required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _ignorePIDs.Add(game.Id);
                 return null;
             }
